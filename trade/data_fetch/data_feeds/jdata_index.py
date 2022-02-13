@@ -1,9 +1,7 @@
 import datetime as dt
 import backtrader as bt
-# import backtrader.feeds as btfeed
 
 class JDataIndex(bt.feeds.GenericCSVData):
-# HistoricalDate,OPEN,HIGH,LOW,CLOSE
     params = (
 
     # ('nullvalue', 0.0),

@@ -8,6 +8,7 @@ import backtrader as bt
 import datetime as dt
 
 cerebro = bt.Cerebro()
+# data_store = bt.store.
 cerebro.broker.setcash(2000000.0)
 print('Starting Portfolio Value: %.2f' % cerebro.broker.getvalue())
 
