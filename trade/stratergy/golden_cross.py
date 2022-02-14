@@ -1,8 +1,9 @@
 import math
 import backtrader as bt
+import datetime as dt
 
 class Strategy(bt.Strategy):
-    params = (('fast',50), ('slow',200))
+    params = (('fast',40), ('slow',100), ('live',True))
 
     def __init__(self):
         self.fast_moving_average = bt.indicators.SMA(
@@ -12,6 +13,7 @@ class Strategy(bt.Strategy):
             self.data.close, period = self.params.slow, plotname='200-MA'
         )
         self.cossover = bt.indicators.CrossOver(self.fast_moving_average, self.slow_moving_average)
+        self.endrun = False
     
     def log(self, txt, dt=None):
         ''' Logging function fot this strategy'''
@@ -49,6 +51,8 @@ class Strategy(bt.Strategy):
         self.order = None
 
     def next(self):
+        if self.endrun==True:
+            self.cerebro.runstop()
         print(len(self))
         if self.position.size == 0:
             if self.cossover > 0:
@@ -62,3 +66,11 @@ class Strategy(bt.Strategy):
                 # self.size = math.floor(amount_to_invest/self.data.close[0])
                 self.close(size=self.size)
                 print(f'SELL {self.size} AT {self.data.close[0]} on {self.data.datetime.date(0)}')
+        
+        if self.params.live:
+            if dt.time(15, 30, 0) < self.data.datetime.time():
+                if self.position.size > 0:
+                    self.close(size=self.size)
+                    print(f'SELL {self.size} AT {self.data.close[0]} on {self.data.datetime.date(0)}')
+                self.log('EOD Timer: Stopping strategy at eod.')
+                self.endrun = True

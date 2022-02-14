@@ -1,18 +1,21 @@
 import datetime as dt
 import backtrader as bt
 
-class JDataIndex(bt.feeds.GenericCSVData):
+class DataFeed(bt.feeds.GenericCSVData):
+
+
+
     params = (
 
     # ('nullvalue', 0.0),
     ('dtformat', ('%Y-%m-%d')),
-    ('datetime', 3),
+    ('datetime', 0),
     ('time', -1),
-    ('high', 5),
-    ('low', 6),
-    ('open', 4),
-    ('close', 7),
-    ('volume', 8),
+    ('high', 2),
+    ('low', 3),
+    ('open', 1),
+    ('close', 4),
+    ('volume', 5),
     ('openinterest', -1),
     ('reverse', True)
 )

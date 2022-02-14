@@ -7,8 +7,7 @@ this_dir = os.path.dirname(os.path.abspath(__file__))
 import backtrader as bt
 import datetime as dt
 
-cerebro = bt.Cerebro()
-# data_store = bt.store.
+cerebro = bt.Cerebro(preload=False)
 cerebro.broker.setcash(2000000.0)
 print('Starting Portfolio Value: %.2f' % cerebro.broker.getvalue())
 
@@ -40,7 +39,7 @@ from matplotlib import pyplot as plt
 
 fig[0][0].set_size_inches(30.5, 24.5)
 # fig.savefig('test2png.png', dpi=100)
-plt.savefig('foo.png', dpi=200)
+plt.savefig(os.path.join(this_dir,'foo.png'), dpi=200)
 # plt.savefig('foo.pdf')
 
 _=123

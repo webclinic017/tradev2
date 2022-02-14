@@ -8,19 +8,15 @@ import backtrader as bt
 import datetime as dt
 
 cerebro = bt.Cerebro()
+# data_store = bt.store.
 cerebro.broker.setcash(2000000.0)
 print('Starting Portfolio Value: %.2f' % cerebro.broker.getvalue())
 
+import backtrader as bt
 
-
-
-from trade.data_fetch.data_feeds.jdata_index import JDataIndex
-data = JDataIndex(
-    dataname=os.path.join(this_dir,'data/sample/nifty_50.csv'),
-)
-# data = bt.feeds.YahooFinanceCSVData(
-#     dataname=os.path.join(this_dir,'data/sample/sample.csv'),
-# )
+# ibstore = bt.stores.IBStore(port=7496)
+data = bt.feeds.IBData(dataname='EUR.USD-CASH-IDEALPRO',
+                       host='127.0.0.1', port=7496, clientId=35)
 
 cerebro.adddata(data)
 

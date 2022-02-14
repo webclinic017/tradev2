@@ -71,3 +71,4 @@ datas/*.py
 .idea/
 
 trade/data/*
+*outputs*

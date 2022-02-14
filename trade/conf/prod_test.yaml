@@ -1,0 +1,13 @@
+defaults:
+  - data_feed: index_live
+  - stratergy: golden_cross
+  - _self_
+
+
+cerebro:
+  live: True
+  stdstats: True
+  oldbuysell: True
+
+broker:
+  cash: 200000
