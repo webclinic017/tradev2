@@ -12,6 +12,7 @@ def get_cerebro(config):
         live=config['live'],
         stdstats=config['cerebro']['stdstats'],
         oldbuysell=config['cerebro']['oldbuysell'],
+        preload=config['cerebro']['preload'],
         )
 
 def get_data_feed(config):
@@ -34,13 +35,18 @@ def get_data_feed(config):
     return data_feed
 
 def get_broker(config):
-    if config['broker']['name'] == 'simulator':
-        from backtrader.brokers.bbroker import BackBroker as Broker
+    # if config['broker']['name'] == 'simulator':
+    #     from backtrader.brokers.bbroker import BackBroker as Broker
 
-    elif config['broker']['name'] == 'zerodha':
-        from trade.broker.zerodha import Broker
+    # elif config['broker']['name'] == 'zerodha':
+    from trade.broker.zerodha import Broker
+    broker = Broker(config)
+    return broker
 
-    return Broker
+def get_commission(config):
+    from trade.commission.zerodha import Commission
+    commission = Commission()
+    return commission
 
 def get_stratergy(config):
     if config['stratergy']['name'] == 'golden_cross':

@@ -11,10 +11,10 @@ class Strategy(BaseStrategy):
         self.params.slow = config['stratergy']['p']['slow']
 
         self.fast_moving_average = bt.indicators.SMA(
-            self.data.close, period = self.params.fast, plotname='50-MA'
+            self.data.close, period = self.params.fast, plotname=f'{self.params.fast}-MA'
         )
         self.slow_moving_average = bt.indicators.SMA(
-            self.data.close, period = self.params.slow, plotname='200-MA'
+            self.data.close, period = self.params.slow, plotname=f'{self.params.slow}-MA'
         )
         self.cossover = bt.indicators.CrossOver(self.fast_moving_average, self.slow_moving_average)
         self.endrun = False

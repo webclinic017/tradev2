@@ -1,5 +1,5 @@
 # @package stratergy
 name: golden_cross
 p:
-  fast: 4
-  slow: 10
+  fast: 40
+  slow: 100

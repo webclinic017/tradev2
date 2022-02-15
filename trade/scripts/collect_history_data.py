@@ -3,12 +3,14 @@ import jugaad_data as jd
 from jugaad_data.nse import index_csv, index_df
 import os
 import _initpaths
+import pandas as pd
 
 from trade.utils.io import write_data, read_data
 this_dir = os.path.dirname(os.path.abspath(__file__))
 
 import glob
 
+df_list = []
 for path in glob.glob(os.path.join(this_dir,'../../data/min_data_nifty/*/*')):
     if 'BNF' in path:
         continue
@@ -36,7 +38,12 @@ for path in glob.glob(os.path.join(this_dir,'../../data/min_data_nifty/*/*')):
         # print(df_group)
         # print(group_name)
         date = dt.datetime.strptime(str(group_name), '%Y%m%d')
-        file_name = os.path.join(this_dir,f'../../data/min_data_nifty_clean/{date.year}/{date.month}/{date.day}.csv')
+        file_name = os.path.join(this_dir,f'data/min_data_nifty_clean/{date.year}/{date.month}/{date.day}.csv')
         print(file_name)
         df_group = df_group[['date','open','high','low','close','volume']]
-        write_data(file_name, df_group)
+        df_list.append(df_group)
+        # break
+
+df = pd.concat(df_list)
+df = df.sort_values(by = 'date')
+write_data(os.path.join(this_dir,f'../../data/min_data_nifty_clean_full/data.csv'),df)

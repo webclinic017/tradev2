@@ -38,7 +38,7 @@ class DataFeed(bt.feeds.GenericCSVData):
         line = get_live_symbol_data_line(self.config['data_feed']['symbol_name'])
         self.output_file_object.write(line)
         self.output_file_object.flush()
-        time.sleep(30)
+        time.sleep(60)
 
         if not line:
             return False
