@@ -41,7 +41,7 @@ class DataFeed(bt.feeds.GenericCSVData):
             line = get_live_index_data_line(self.index_name__)
             self.output_file_object.write(line)
             self.output_file_object.flush()
-            time.sleep(5)
+            time.sleep(30)
         else:
             line = self.f.readline()
 

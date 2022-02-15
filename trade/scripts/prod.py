@@ -1,3 +1,4 @@
+import imp
 import _initpaths
 import hydra
 from omegaconf import DictConfig, OmegaConf
@@ -22,9 +23,20 @@ def get_data_feed(config):
     
     return data_feed
 
+def get_broker(config):
+    # if config['test']==False:
+    #     from backtrader.brokers.bbroker import BackBroker as Broker
+
+    if config['broker']['name'] == 'zerodha':
+        from trade.broker.zerodha import Broker
+
+    return Broker
+
 def get_stratergy(config):
     if config['stratergy']['name'] == 'golden_cross':
         from trade.stratergy.golden_cross import Strategy
+    if config['stratergy']['name'] == 'test':
+        from trade.stratergy.test import Strategy
     
     return Strategy
 
@@ -49,6 +61,9 @@ def my_app(config):
     data_feed = get_data_feed(config)
     cerebro.adddata(data_feed)
 
+    broker = get_broker(config)
+    cerebro.broker = broker()
+    
     Strategy = get_stratergy(config)
     cerebro.addstrategy(Strategy)
 

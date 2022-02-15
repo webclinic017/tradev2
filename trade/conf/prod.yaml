@@ -1,6 +1,7 @@
 defaults:
   - data_feed: index_live
   - stratergy: golden_cross
+  - broker: zerodha
   - _self_
 
 
