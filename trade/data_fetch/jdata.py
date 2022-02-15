@@ -8,7 +8,7 @@ this_dir = os.path.dirname(os.path.abspath(__file__))
 
 from jugaad_data.nse import NSELive
 
-
+n = NSELive()
 
 def get_sample_data():
     # Download as pandas dataframe
@@ -23,7 +23,6 @@ def get_sample_data():
     write_data(filename, df)
 
 def get_live_index_data(index_name):
-    n = NSELive()
     index_price = n.live_index(index_name)
 
     index_price_clean = {
@@ -38,7 +37,6 @@ def get_live_index_data(index_name):
     return index_price_clean
 
 def get_live_index_data_line(index_name):
-    n = NSELive()
     index_price = n.live_index(index_name)
 
     index_price_clean = {
@@ -51,3 +49,19 @@ def get_live_index_data_line(index_name):
         "volume":int(index_price['metadata']['totalTradedVolume']),
     }
     return ','.join(map(str, index_price_clean.values()))+'\n'
+
+def get_live_symbol_data_line(symbol_name):
+    
+    # TODO verify that time of both price and trade_info in sync
+    price = n.stock_quote(symbol_name)
+    trade_info = n.trade_info(symbol_name)
+    price_clean = {
+        "date":dt.datetime.strptime(price['metadata']['lastUpdateTime'], '%d-%b-%Y %H:%M:%S'),
+        "open":float(price['priceInfo']['open']),
+        "high":float(price['priceInfo']['intraDayHighLow']['max']),
+        "low":float(price['priceInfo']['intraDayHighLow']['min']),
+        # "previousClose":float(price['metadata']['previousClose']),
+        "close":float(price['priceInfo']['lastPrice']),
+        "volume":int(trade_info['marketDeptOrderBook']['tradeInfo']['totalTradedVolume']),
+    }
+    return ','.join(map(str, price_clean.values()))+'\n'

@@ -1,59 +1,19 @@
 from backtrader.brokers.bbroker import BackBroker
 from backtrader.order import BuyOrder, SellOrder
-
+from trade.auth.zerodha_auth import get_kite
 from jugaad_trader import Zerodha
-# kite = Zerodha()
- 
-# # Set access token loads the stored session.
-# # Name chosen to keep it compatible with kiteconnect.
-# kite.set_access_token()
-
-# # Get profile
-# profile = kite.profile()
-# print(profile)
-
-# # Get margin
-# margins = kite.margins()
-# print(margins)
-
-# # Get holdings
-# holdings = kite.holdings()
-# print(holdings)
-
-# # Get today's positions
-# positions = kite.positions()
-# print(positions)
-
-# # Get today's orders
-# orders = kite.orders()
-# print(orders)
-
-# # Finally placing an order
-# order_resp = kite.place_order(variety=Zerodha.VARIETY_REGULAR,
-# 			tradingsymbol="INFY",
-# 			exchange=kite.EXCHANGE_NSE,
-# 			transaction_type=kite.TRANSACTION_TYPE_BUY,
-# 			quantity=1,
-# 			order_type=kite.ORDER_TYPE_MARKET,
-# 			product=kite.PRODUCT_CNC)
-# print(order_resp)
-
-
 
 class Broker(BackBroker):
     def __init__(self):
         super(Broker, self).__init__()
-        self.kite = Zerodha()
-        self.kite.set_access_token()
-        profile = self.kite.profile()
-        print(profile)
+        self.kite = get_kite()
 
     def buy(self, owner, data,
             size, price=None, plimit=None,
             exectype=None, valid=None, tradeid=0, oco=None,
             trailamount=None, trailpercent=None,
             parent=None, transmit=True,
-            histnotify=False, _checksubmit=True,tradingsymbol=None,
+            histnotify=False, _checksubmit=True,trading_symbol=None,
             **kwargs):
 
         order = BuyOrder(owner=owner, data=data,
@@ -63,7 +23,7 @@ class Broker(BackBroker):
                          parent=parent, transmit=transmit,
                          histnotify=histnotify)
         
-        self.place_order_kite(self.kite.TRANSACTION_TYPE_BUY, tradingsymbol, size)
+        self.place_order_kite(self.kite.TRANSACTION_TYPE_BUY, trading_symbol, size)
 
         order.addinfo(**kwargs)
         self._ocoize(order, oco)
@@ -75,7 +35,7 @@ class Broker(BackBroker):
              exectype=None, valid=None, tradeid=0, oco=None,
              trailamount=None, trailpercent=None,
              parent=None, transmit=True,
-             histnotify=False, _checksubmit=True,tradingsymbol=None,
+             histnotify=False, _checksubmit=True,trading_symbol=None,
              **kwargs):
 
         order = SellOrder(owner=owner, data=data,
@@ -85,20 +45,20 @@ class Broker(BackBroker):
                           parent=parent, transmit=transmit,
                           histnotify=histnotify)
         
-        self.place_order_kite(self.kite.TRANSACTION_TYPE_SELL, tradingsymbol, size)
+        self.place_order_kite(self.kite.TRANSACTION_TYPE_SELL, trading_symbol, size)
 
         order.addinfo(**kwargs)
         self._ocoize(order, oco)
 
         return self.submit(order, check=_checksubmit)
     
-    def place_order_kite(self, order_type, tradingsymbol, size):
-        print(f'DUMMY ORDER PLACE {order_type}, {tradingsymbol}, {size}')
+    def place_order_kite(self, order_type, trading_symbol, size):
+        print(f'DUMMY ORDER PLACE {order_type}, {trading_symbol}, {size}')
         
         # order_resp = self.kite.place_order(variety=Zerodha.VARIETY_REGULAR,
-        #         tradingsymbol=tradingsymbol,
+        #         tradingsymbol=trading_symbol,
         #         exchange=self.kite.EXCHANGE_NSE,
-        #         transaction_type=self.kite.TRANSACTION_TYPE_BUY,
+        #         transaction_type=order_type,
         #         quantity=size,
         #         order_type=self.kite.ORDER_TYPE_MARKET,
         #         product=self.kite.PRODUCT_CNC)

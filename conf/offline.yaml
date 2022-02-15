@@ -1,0 +1,25 @@
+defaults:
+  - data_feed: jdata
+  - stratergy: golden_cross
+  - broker: simulator
+  - _self_
+
+
+cerebro:
+  stdstats: True
+  oldbuysell: True
+
+data_feed:
+  name: jdata_offline
+  symbol_name: NIFTYBEES
+  filepath: ../../data/min_data_nifty_clean/2021/1/1.csv
+
+testing_param: ratio
+run_id: 0
+live: False
+data_feed_test: False
+broker_test: False
+stratergy_test: True
+
+broker:
+  cash: 20000

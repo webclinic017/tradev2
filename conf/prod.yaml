@@ -1,0 +1,22 @@
+defaults:
+  - data_feed: jdata
+  - stratergy: golden_cross
+  - broker: zerodha
+  - _self_
+
+
+cerebro:
+  stdstats: True
+  oldbuysell: True
+
+data_feed:
+  name: jdata_live
+  symbol_name: NIFTYBEES
+  filepath: ../../data/prod/NIFTY 50/2022/02/14.csv
+
+live: True
+data_feed_test: True
+broker_test: False
+
+broker:
+  cash: 20000

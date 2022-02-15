@@ -7,20 +7,21 @@ import os
 this_dir = os.path.dirname(os.path.abspath(__file__))
 
 class DataFeed(bt.feeds.GenericCSVData):
-    params = (
-    # ('nullvalue', 0.0),
-    ('dtformat', ('%Y-%m-%d %H:%M:%S')),
-    ('datetime', 0),
-    ('time', -1),
-    ('high', 2),
-    ('low', 3),
-    ('open', 1),
-    ('close', 4),
-    ('volume', 5),
-    ('openinterest', -1),
-    ('reverse', True)
-)
-    # date,open,high,low,previousClose,close,volume
+
+
+    def __init__(self, config):
+        # date,open,high,low,previousClose,close,volume
+        self.p.dtformat = config['data_feed']['p']['dtformat']
+        self.p.datetime = config['data_feed']['p']['datetime']
+        self.p.open = config['data_feed']['p']['open']
+        self.p.high = config['data_feed']['p']['high']
+        self.p.low = config['data_feed']['p']['low']
+        self.p.close = config['data_feed']['p']['close']
+        self.p.volume = config['data_feed']['p']['volume']
+        self.p.time = config['data_feed']['p']['time']
+        self.p.openinterest = config['data_feed']['p']['openinterest']
+        self.p.reverse = config['data_feed']['p']['reverse']
+
     def set_index_name(self, index_name):
         self.index_name__ = index_name
         self.filename = os.path.join(
@@ -44,6 +45,7 @@ class DataFeed(bt.feeds.GenericCSVData):
             time.sleep(30)
         else:
             line = self.f.readline()
+            # time.sleep(1)
 
         if not line:
             return False
