@@ -24,6 +24,7 @@ def my_app(config):
     cerebro.broker.setcash(config['broker']['cash'])
     print('Starting Portfolio Value: %.2f' % cerebro.broker.getvalue())
     cerebro.run()
+    print(config['stratergy']['p']['fast'],config['stratergy']['p']['slow'],config['run_id'])
     dump_results(config, cerebro)
     print('Final Portfolio Value: %.2f' % cerebro.broker.getvalue())
 

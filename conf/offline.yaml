@@ -15,7 +15,7 @@ data_feed:
   symbol_name: NIFTYBEES
   filepath: ../../data/min_data_nifty_clean_full/data.csv
 
-testing_param: ratio
+testing_param: golden_strat_test_full/ratio
 run_id: 0
 live: False
 data_feed_test: False
@@ -23,4 +23,4 @@ broker_test: False
 stratergy_test: True
 
 broker:
-  cash: 20000
+  cash: 9200000

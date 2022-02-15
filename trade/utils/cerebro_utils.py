@@ -60,7 +60,7 @@ def dump_results(config, cerebro):
     filename_plot, filename_pl = get_result_files(config)
     fig = cerebro.plot()
     fig[0][0].set_size_inches(20.5, 16.5)
-    plt.savefig(filename_plot, dpi=200)
+    # plt.savefig(filename_plot, dpi=200)
 
     pl = {
             'start':config['broker']['cash'],

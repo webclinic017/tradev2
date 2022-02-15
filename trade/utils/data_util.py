@@ -32,12 +32,12 @@ def get_result_files(config):
     else:
         filename_plot = os.path.join(
             this_dir,
-            f'../../output/{config["testing_param"]}_{config["run_id"]}/{config["data_feed"]["symbol_name"]}.png'
+            f'../../output/{config["testing_param"]}_{config["run_id"]}_{config["data_feed"]["symbol_name"]}.png'
         )
 
         filename_pl = os.path.join(
             this_dir,
-            f'../../output/{config["testing_param"]}_{config["run_id"]}/{config["data_feed"]["symbol_name"]}.yaml'
+            f'../../output/{config["testing_param"]}_{config["run_id"]}_{config["data_feed"]["symbol_name"]}.yaml'
         )
         os.makedirs(os.path.dirname(filename_plot), exist_ok=True)
     return filename_plot, filename_pl
