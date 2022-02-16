@@ -74,3 +74,4 @@ data/*
 *outputs*
 *output/*
 trade/data/*
+.vscode/*

@@ -1,6 +1,6 @@
 from backtrader.brokers.bbroker import BackBroker
 from backtrader.order import Order, BuyOrder, SellOrder
-from trade.auth.zerodha_auth import get_kite
+from trade.auth.zerodha_auth import ZerodhaAuth
 from jugaad_trader import Zerodha
 
 class Broker(BackBroker):
@@ -8,7 +8,7 @@ class Broker(BackBroker):
         super(Broker, self).__init__()
         self.config = config
         if self.config['live'] == True:
-            self.kite = get_kite()
+            self.kite = ZerodhaAuth.get_kite()
 
     def buy(self, owner, data,
             size, price=None, plimit=None,

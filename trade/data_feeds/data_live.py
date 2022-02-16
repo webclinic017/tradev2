@@ -1,7 +1,7 @@
 import datetime as dt
 import backtrader as bt
 from backtrader import date2num, num2date
-from trade.data_fetch.jdata import get_live_symbol_data_line
+from trade.data_fetch.data_fetcher import get_live_symbol_data_line, get_live_symbol_data_line_zerodha
 from trade.utils.data_util import get_data_file
 import time
 import os
@@ -30,15 +30,28 @@ class DataFeed(bt.feeds.GenericCSVData):
         self.p.reverse = self.config['data_feed']['p']['reverse']
 
         self.output_file_object = get_data_file(self.config)
+        self.done_past = False
+        self.f = get_data_file(self.config, previous_day=True)
 
     def _load(self):
         if self.f is None:
             return False
 
-        line = get_live_symbol_data_line(self.config['data_feed']['symbol_name'])
-        self.output_file_object.write(line)
-        self.output_file_object.flush()
-        time.sleep(60)
+        if self.done_past==False:
+            line = self.f.readline()
+            if line=='':
+                self.done_past=True
+                print('Starting Live Feed Now')
+                line = get_live_symbol_data_line_zerodha(self.config['data_feed']['symbol_name'])
+                self.output_file_object.write(line)
+                self.output_file_object.flush()
+                time.sleep(5)
+
+        else:
+            line = get_live_symbol_data_line_zerodha(self.config['data_feed']['symbol_name'])
+            self.output_file_object.write(line)
+            self.output_file_object.flush()
+            time.sleep(5)
 
         if not line:
             return False

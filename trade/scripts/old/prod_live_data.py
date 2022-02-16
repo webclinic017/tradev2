@@ -1,5 +1,5 @@
 import _initpaths
-from trade.data_fetch.jdata import get_live_index_data
+from trade.data_fetch.data_fetcher import get_live_index_data
 import numpy as np
 import datetime as dt
 import time 
@@ -75,7 +75,7 @@ from talib.abstract import SMA
 
 
 import _initpaths
-# from trade.data_fetch.jdata import get_sample_data
+# from trade.data_fetch.data_fetcher import get_sample_data
 # get_sample_data()
 import os
 this_dir = os.path.dirname(os.path.abspath(__file__))

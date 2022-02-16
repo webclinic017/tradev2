@@ -8,9 +8,10 @@ defaults:
 cerebro:
   stdstats: True
   oldbuysell: True
+  preload: False
 
 data_feed:
-  name: jdata_live
+  name: data_live
   symbol_name: NIFTYBEES
   filepath: ../../data/prod/NIFTY 50/2022/02/14.csv
 

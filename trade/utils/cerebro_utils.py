@@ -16,8 +16,8 @@ def get_cerebro(config):
         )
 
 def get_data_feed(config):
-    if config['data_feed']['name'] == 'jdata_live':
-        from trade.data_feeds.jdata_live import DataFeed
+    if config['data_feed']['name'] == 'data_live':
+        from trade.data_feeds.data_live import DataFeed
         data_feed = DataFeed(
         dataname=os.path.join(this_dir,config['data_feed']['filepath']),
         timeframe=bt.TimeFrame.Seconds,

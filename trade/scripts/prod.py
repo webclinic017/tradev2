@@ -4,7 +4,7 @@ import os
 from trade.utils.cerebro_utils import get_cerebro, get_broker, get_stratergy, get_data_feed, dump_results, get_commission
 this_dir = os.path.dirname(os.path.abspath(__file__))
 
-@hydra.main(config_path=os.path.join(this_dir,'../../conf'), config_name='offline.yaml')
+@hydra.main(config_path=os.path.join(this_dir,'../../conf'), config_name='prod.yaml')
 def my_app(config):
     # config = OmegaConf.to_object(config)
     cerebro = get_cerebro(config)
@@ -24,7 +24,6 @@ def my_app(config):
     cerebro.broker.setcash(config['broker']['cash'])
     print('Starting Portfolio Value: %.2f' % cerebro.broker.getvalue())
     cerebro.run()
-    print(config['stratergy']['p']['fast'],config['stratergy']['p']['slow'],config['run_id'])
     dump_results(config, cerebro)
     print('Final Portfolio Value: %.2f' % cerebro.broker.getvalue())
 

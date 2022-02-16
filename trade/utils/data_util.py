@@ -3,17 +3,26 @@ import os
 this_dir = os.path.dirname(os.path.abspath(__file__))
 
 
-def get_data_file(config):
-    filename = os.path.join(
-        this_dir,
-        f'../../output/prod/{config["data_feed"]["symbol_name"]}',
-        dt.date.today().strftime('%Y/%m/%d.csv')
-    )
-    os.makedirs(os.path.dirname(filename), exist_ok=True)
-    output_file_object = open(filename,'w')
-    #  if v is int and v>=0
-    output_file_object.write(config['data_feed']['p']['header']+'\n')
-    return output_file_object
+def get_data_file(config, previous_day=False):
+    if previous_day==False:
+        filename = os.path.join(
+            this_dir,
+            f'../../output/prod/{config["data_feed"]["symbol_name"]}',
+            dt.date.today().strftime('%Y/%m/%d.csv')
+        )
+        os.makedirs(os.path.dirname(filename), exist_ok=True)
+        output_file_object = open(filename,'w')
+        #  if v is int and v>=0
+        output_file_object.write(config['data_feed']['p']['header']+'\n')
+        return output_file_object
+    else:
+        filename = os.path.join(
+            this_dir,
+            f'../../output/prod/{config["data_feed"]["symbol_name"]}',
+            (dt.date.today()-dt.timedelta(days = 1)).strftime('%Y/%m/%d.csv')
+        )
+        output_file_object = open(filename,'r')
+        return output_file_object
 
 def get_result_files(config):
     if config['live']==True:

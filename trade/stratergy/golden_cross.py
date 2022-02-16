@@ -17,7 +17,6 @@ class Strategy(BaseStrategy):
             self.data.close, period = self.params.slow, plotname=f'{self.params.slow}-MA'
         )
         self.cossover = bt.indicators.CrossOver(self.fast_moving_average, self.slow_moving_average)
-        self.endrun = False
     
     def notify_order(self, order):
         if order.status in [order.Submitted, order.Accepted]:
@@ -49,10 +48,19 @@ class Strategy(BaseStrategy):
 
         self.order = None
 
-    def next(self):
-        if self.endrun==True:
-            self.cerebro.runstop()
+    def next(self):        
         self.log(None)
+        
+        if self.params.live:
+            if dt.date.today() > self.data.datetime.date():
+                return
+            if dt.time(15, 30, 0) < self.data.datetime.time():
+                if self.position.size > 0:
+                    self.sell(size=self.size, trading_symbol=self.params.trading_symbol)
+                    self.log(f'SELL {self.size} AT {self.data.close[0]} on {self.data.datetime.date(0)}')
+                self.log('EOD Timer: Stopping strategy at eod.')
+                self.cerebro.runstop()
+        
         if self.position.size == 0:
             if self.cossover > 0:
                 amount_to_invest = self.broker.cash*0.9
@@ -65,11 +73,3 @@ class Strategy(BaseStrategy):
                 # self.size = math.floor(amount_to_invest/self.data.close[0])
                 self.sell(size=self.size, trading_symbol=self.params.trading_symbol)
                 self.log(f'SELL {self.size} AT {self.data.close[0]} on {self.data.datetime.date(0)}')
-        
-        if self.params.live:
-            if dt.time(15, 30, 0) < self.data.datetime.time():
-                if self.position.size > 0:
-                    self.sell(size=self.size, trading_symbol=self.params.trading_symbol)
-                    self.log(f'SELL {self.size} AT {self.data.close[0]} on {self.data.datetime.date(0)}')
-                self.log('EOD Timer: Stopping strategy at eod.')
-                self.endrun = True

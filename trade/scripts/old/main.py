@@ -1,5 +1,5 @@
 import _initpaths
-from trade.data_fetch.jdata import get_sample_data
+from trade.data_fetch.data_fetcher import get_sample_data
 get_sample_data()
 import os
 this_dir = os.path.dirname(os.path.abspath(__file__))

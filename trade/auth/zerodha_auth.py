@@ -8,36 +8,42 @@ from azure.keyvault.secrets import SecretClient
 from azure.identity import DefaultAzureCredential
 import configparser
 
-def get_kite():
-    creds = get_creds()
-    kite = Zerodha(
-        user_id=creds['Zerodha']['usr'], 
-        password=creds['Zerodha']['pwd'], 
-        twofa=creds['Zerodha']['pin'])
+class ZerodhaAuth:
+    kite = None
+    @classmethod
+    def get_kite(cls):
+        if cls.kite == None:
+            creds = cls.get_creds()
+            kite = Zerodha(
+                user_id=creds['Zerodha']['usr'], 
+                password=creds['Zerodha']['pwd'], 
+                twofa=creds['Zerodha']['pin'])
+            
+            try:
+                kite.set_access_token()
+                profile = kite.profile()
+            except:
+                print(f'Logging in')
+                login = kite.login()
+                cookie_path = os.path.join(click.get_app_dir(CLI_NAME), ".zsession")
+                with open(cookie_path, "wb") as fp:
+                    pickle.dump(kite.reqsession ,fp)
+                profile = kite.profile()
+            print(f'Logged in as {profile["user_name"]}')
+            cls.kite = kite
+        return cls.kite
     
-    try:
-        kite.set_access_token()
-        profile = kite.profile()
-    except:
-        login = kite.login()
-        cookie_path = os.path.join(click.get_app_dir(CLI_NAME), ".zsession")
-        with open(cookie_path, "wb") as fp:
-            pickle.dump(kite.reqsession ,fp)
-        profile = kite.profile()
-    print(f'Logged in as {profile["user_name"]}')
+    @classmethod
+    def get_creds(self):
+        keyVaultName = 'cred-rohit'
+        KVUri = f"https://{keyVaultName}.vault.azure.net"
+        secretName = "creds"
 
-    return kite
+        credential = DefaultAzureCredential()
+        azure_client = SecretClient(vault_url=KVUri, credential=credential)
 
-def get_creds():
-    keyVaultName = 'cred-rohit'
-    KVUri = f"https://{keyVaultName}.vault.azure.net"
-    secretName = "creds"
+        retrieved_secret = azure_client.get_secret(secretName)
+        config = configparser.RawConfigParser()
+        config.read_string(retrieved_secret.value.replace('\\n','\n'))
 
-    credential = DefaultAzureCredential()
-    azure_client = SecretClient(vault_url=KVUri, credential=credential)
-
-    retrieved_secret = azure_client.get_secret(secretName)
-    config = configparser.RawConfigParser()
-    config.read_string(retrieved_secret.value.replace('\\n','\n'))
-
-    return config
+        return config

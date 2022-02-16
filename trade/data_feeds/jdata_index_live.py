@@ -1,7 +1,7 @@
 import datetime as dt
 import backtrader as bt
 from backtrader import date2num, num2date
-from trade.data_fetch.jdata import get_live_index_data_line
+from trade.data_fetch.data_fetcher import get_live_index_data_line
 import time
 import os
 this_dir = os.path.dirname(os.path.abspath(__file__))
