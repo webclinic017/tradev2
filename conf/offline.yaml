@@ -8,7 +8,7 @@ defaults:
 cerebro:
   stdstats: True
   oldbuysell: True
-  preload: False
+  preload: True
 
 data_feed:
   name: jdata_offline
@@ -21,6 +21,7 @@ live: False
 data_feed_test: False
 broker_test: False
 stratergy_test: True
+plot: False
 
 broker:
   cash: 9200000

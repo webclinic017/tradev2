@@ -45,13 +45,13 @@ class DataFeed(bt.feeds.GenericCSVData):
                 line = get_live_symbol_data_line_zerodha(self.config['data_feed']['symbol_name'])
                 self.output_file_object.write(line)
                 self.output_file_object.flush()
-                time.sleep(5)
+                time.sleep(59.5)
 
         else:
             line = get_live_symbol_data_line_zerodha(self.config['data_feed']['symbol_name'])
             self.output_file_object.write(line)
             self.output_file_object.flush()
-            time.sleep(5)
+            time.sleep(59.5)
 
         if not line:
             return False

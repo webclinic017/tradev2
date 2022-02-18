@@ -16,8 +16,9 @@ data_feed:
   filepath: ../../data/prod/NIFTY 50/2022/02/14.csv
 
 live: True
-data_feed_test: True
+data_feed_test: False
 broker_test: False
+plot: True
 
 broker:
   cash: 20000
