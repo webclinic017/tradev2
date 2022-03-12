@@ -1,6 +1,6 @@
 # tradev2
 
-New version of trading library. 
+New version of trading framework. 
 
 Supports live trading using live data. 
 
