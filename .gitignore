@@ -75,3 +75,4 @@ data/*
 *output/*
 trade/data/*
 .vscode/*
+trade/notebooks/*
