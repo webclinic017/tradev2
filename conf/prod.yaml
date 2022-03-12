@@ -21,4 +21,4 @@ broker_test: False
 plot: True
 
 broker:
-  cash: 20000
+  cash: 200

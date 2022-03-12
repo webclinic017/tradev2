@@ -24,4 +24,6 @@ stratergy_test: True
 plot: False
 
 broker:
-  cash: 9200000
+  cash: 100000
+
+# python trade/scripts/prod.py --config-name=offline data_feed.filepath=../../data/NIFTYBEES/data.csv plot=True broker.cash=20000 testing_param=golden_strat_test_full_vs

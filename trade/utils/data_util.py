@@ -16,12 +16,19 @@ def get_data_file(config, previous_day=False):
         output_file_object.write(config['data_feed']['p']['header']+'\n')
         return output_file_object
     else:
-        filename = os.path.join(
-            this_dir,
-            f'../../output/prod/{config["data_feed"]["symbol_name"]}',
-            (dt.date.today()-dt.timedelta(days = 1)).strftime('%Y/%m/%d.csv')
-        )
-        output_file_object = open(filename,'r')
+        delta=1
+        while True:
+            filename = os.path.join(
+                this_dir,
+                f'../../output/prod/{config["data_feed"]["symbol_name"]}',
+                (dt.date.today()-dt.timedelta(days = delta)).strftime('%Y/%m/%d.csv')
+            )
+            if os.path.exists(filename):
+                output_file_object = open(filename,'r')
+                break
+            else:
+                delta = delta+1
+                continue
         return output_file_object
 
 def get_result_files(config):

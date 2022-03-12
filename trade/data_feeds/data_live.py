@@ -30,7 +30,7 @@ class DataFeed(bt.feeds.GenericCSVData):
         self.p.reverse = self.config['data_feed']['p']['reverse']
 
         self.output_file_object = get_data_file(self.config)
-        self.done_past = False
+        self.done_past = True
         self.f = get_data_file(self.config, previous_day=True)
 
     def _load(self):
