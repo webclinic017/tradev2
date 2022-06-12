@@ -53,7 +53,8 @@ def get_stratergy(config):
         from trade.stratergy.golden_cross import Strategy
     if config['stratergy']['name'] == 'test':
         from trade.stratergy.test import Strategy
-    
+    if config['stratergy']['name'] == 'dummy_strat':
+        from trade.stratergy.dummy_strat import Strategy    
     return Strategy
 
 def dump_results(config, cerebro):

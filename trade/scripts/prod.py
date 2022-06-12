@@ -4,7 +4,7 @@ import os
 from trade.utils.cerebro_utils import get_cerebro, get_broker, get_stratergy, get_data_feed, dump_results, get_commission
 this_dir = os.path.dirname(os.path.abspath(__file__))
 
-@hydra.main(config_path=os.path.join(this_dir,'../../conf'), config_name='prod.yaml')
+@hydra.main(config_path=os.path.join(this_dir,'../../conf'), config_name='offline.yaml')
 def my_app(config):
     # config = OmegaConf.to_object(config)
     cerebro = get_cerebro(config)

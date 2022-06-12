@@ -1,6 +1,6 @@
 defaults:
   - data_feed: jdata
-  - stratergy: golden_cross
+  - stratergy: dummy_strat
   - broker: simulator
   - _self_
 
@@ -13,7 +13,7 @@ cerebro:
 data_feed:
   name: jdata_offline
   symbol_name: NIFTYBEES
-  filepath: ../../data/min_data_nifty_clean_full/data.csv
+  filepath: ../../data/min_data_nifty_clean_full/data_day.csv
 
 testing_param: golden_strat_test_full/ratio
 run_id: 0
@@ -21,7 +21,7 @@ live: False
 data_feed_test: False
 broker_test: False
 stratergy_test: True
-plot: False
+plot: True
 
 broker:
   cash: 100000

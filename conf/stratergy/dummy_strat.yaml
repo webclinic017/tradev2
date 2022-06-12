@@ -1,0 +1,5 @@
+# @package stratergy
+name: dummy_strat
+p:
+  yesterday_return: -0.25
+  prev_close_open_return: -0.1
