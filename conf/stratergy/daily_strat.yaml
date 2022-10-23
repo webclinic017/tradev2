@@ -1,0 +1,5 @@
+# @package stratergy
+name: daily_strat
+p:
+  fast: 50
+  slow: 200

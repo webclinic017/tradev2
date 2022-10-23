@@ -1,0 +1,5 @@
+# @package stratergy
+name: golden_cross_daily
+p:
+  fast: 5
+  slow: 35

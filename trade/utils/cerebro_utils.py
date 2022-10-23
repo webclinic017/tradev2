@@ -31,6 +31,14 @@ def get_data_feed(config):
         timeframe=bt.TimeFrame.Seconds,
         config=config
         )
+    
+    if config['data_feed']['name'] == 'jdata_offline_daily':
+        from trade.data_feeds.jdata_offline import DataFeed
+        data_feed = DataFeed(
+        dataname=os.path.join(this_dir,config['data_feed']['filepath']),
+        timeframe=bt.TimeFrame.Days,
+        config=config
+        )
 
     return data_feed
 
@@ -54,7 +62,11 @@ def get_stratergy(config):
     if config['stratergy']['name'] == 'test':
         from trade.stratergy.test import Strategy
     if config['stratergy']['name'] == 'dummy_strat':
-        from trade.stratergy.dummy_strat import Strategy    
+        from trade.stratergy.dummy_strat import Strategy
+    if config['stratergy']['name'] == 'golden_cross_daily':
+        from trade.stratergy.golden_cross_daily import Strategy    
+    if config['stratergy']['name'] == 'buy_and_hold':
+        from trade.stratergy.buy_and_hold import Strategy   
     return Strategy
 
 def dump_results(config, cerebro):

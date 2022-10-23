@@ -4,8 +4,8 @@ import click
 from jugaad_trader.util import CLI_NAME
 import pickle
 
-from azure.keyvault.secrets import SecretClient
-from azure.identity import DefaultAzureCredential
+# from azure.keyvault.secrets import SecretClient
+# from azure.identity import DefaultAzureCredential
 import configparser
 
 class ZerodhaAuth:
@@ -35,15 +35,17 @@ class ZerodhaAuth:
     
     @classmethod
     def get_creds(self):
-        keyVaultName = 'cred-rohit'
-        KVUri = f"https://{keyVaultName}.vault.azure.net"
-        secretName = "creds"
+        # keyVaultName = 'cred-rohit'
+        # KVUri = f"https://{keyVaultName}.vault.azure.net"
+        # secretName = "creds"
 
-        credential = DefaultAzureCredential()
-        azure_client = SecretClient(vault_url=KVUri, credential=credential)
+        # credential = DefaultAzureCredential()
+        # azure_client = SecretClient(vault_url=KVUri, credential=credential)
 
-        retrieved_secret = azure_client.get_secret(secretName)
-        config = configparser.RawConfigParser()
-        config.read_string(retrieved_secret.value.replace('\\n','\n'))
+        # retrieved_secret = azure_client.get_secret(secretName)
+        # config = configparser.RawConfigParser()
+        # config.read_string(retrieved_secret.value.replace('\\n','\n'))
+
+        # config = {'Zerodha':{'usr':'HD8422','pwd':'#ze#rgkm#764484','pin':'764484'}}
 
         return config
